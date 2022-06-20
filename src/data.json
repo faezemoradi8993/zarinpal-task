@@ -1,0 +1,43 @@
+[
+  {
+    "form": "users",
+    "path": "addusers",
+    "titleform": "اضافه کردن کاربر",
+    "field": [
+      {
+        "name": "fullname",
+        "title": "نام کاربر",
+        "type": "text"
+      },
+      {
+        "name": "password",
+        "title": "پسورد",
+        "type": "pass"
+      },
+      {
+        "name": "gender",
+        "title": "جنسیت",
+        "type": "radio"
+      }
+    ],
+    "createurl": "test.com/api/users/testadd"
+  },
+  {
+    "form": "product",
+    "path": "addproduct",
+    "titleform": "اضافه کردن محصول",
+    "field": [
+      {
+        "name": "productname",
+        "title": "نام محصول",
+        "type": "text"
+      },
+      {
+        "name": "count",
+        "title": "تعداد",
+        "type": "text"
+      }
+    ],
+    "createurl": "test.com/api/product/testadd"
+  }
+]
