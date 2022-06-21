@@ -1,8 +1,11 @@
 import React from "react";
+import { useDispatch} from 'react-redux'
 
-const FormMaker = ({ formData }) => {
-  const handleSubmit = (formData) => {
-    console.log(formData);
+const FormMaker = ({ formData , func }) => {
+  const dispatch = useDispatch()
+  const handleSubmit = (e) => {
+    // dispatch(func())
+    e.preventDefault();
   };
   return (
     <div>
