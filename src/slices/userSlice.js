@@ -1,33 +1,52 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-const initialState = {
-  response: [],
-  status: 'idle',
-  errorMessage: null,
-}
+import { createSlice } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify';
+//  import the thunk
+import { addUser } from '../api'
 
-// First, create the thunk
-export const addUser = createAsyncThunk('users/addUser', async (data) => {
-  const response = await fetch("https://test.com/api/users/testadd", data)
-  return response.data
-})
+
 //create the slice
-export const productSlice = createSlice({
-  name: 'users',
-  initialState,
-  reducers: {},
-  extraReducers: {
-    [addUser.fulfilled]: (state, action) => {
-      state.response = action.payload
-      state.status = action.status
-    },
-    [addUser.pending]: (state, action) => {
-      state.response = action.payload
-      state.status = action.status
-    },
-    [addUser.rejected]: (state, action) => {
-      state.response = action.payload
-      state.status = action.status
-      state.errorMessage = action.error.message
+const initialState = {
+    users: [],
+    loading: 'idle',
+    currentRequestId: undefined,
+    error: null,
+}
+const userSlice = createSlice({
+    name: 'user',
+    initialState,
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(addUser.fulfilled, (state, action) => {
+                const { requestId } = action.meta.requestId
+                // if (
+                //     state.loading === 'pending' &&
+                //     state.currentRequestId === requestId
+                // ) {
+                state.loading = 'idle'
+                toast.success("done!")
+                state.currentRequestId = undefined
+                // }
+            })
+            .addCase(addUser.pending, (state, action) => {
+                if (state.loading === 'idle') {
+                    state.loading = 'pending'
+                    state.currentRequestId = action?.meta?.requestId
+                    state.users = [...state.users, (action?.meta?.arg)]
+                }
+            })
+            .addCase(addUser.rejected, (state, action) => {
+                // const { requestId } = action.meta
+                // if (
+                //     state.loading === 'pending' &&
+                //     state.currentRequestId === requestId
+                // ) {
+                state.loading = 'idle'
+                state.error = action.error
+                state.currentRequestId = undefined
+                toast.error(action?.error?.message)
+                // }
+            })
     }
-  }
 })
+export default userSlice.reducer
