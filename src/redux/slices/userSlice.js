@@ -23,16 +23,16 @@ const userSlice = createSlice({
                     state.loading === 'pending' &&
                     state.currentRequestId === requestId
                 ) {
-                state.loading = 'idle'
-                state.currentRequestId = undefined
-                toast.success("done!")
+                    state.loading = 'idle'
+                    state.currentRequestId = undefined
+                    toast.success("done!")
                 }
             })
             .addCase(addUser.pending, (state, action) => {
-                const { requestId,arg } = action?.meta
+                const { requestId, arg } = action?.meta
                 if (state.loading === 'idle') {
                     state.loading = 'pending'
-                    state.currentRequestId =requestId
+                    state.currentRequestId = requestId
                     state.users = [...state.users, arg]
                 }
             })
@@ -42,10 +42,10 @@ const userSlice = createSlice({
                     state.loading === 'pending' &&
                     state.currentRequestId === requestId
                 ) {
-                state.loading = 'idle'
-                state.error = action.error
-                state.currentRequestId = undefined
-                toast.error(action?.error?.message)
+                    state.loading = 'idle'
+                    state.error = action.error
+                    state.currentRequestId = undefined
+                    toast.error(action?.error?.message)
                 }
             })
     }

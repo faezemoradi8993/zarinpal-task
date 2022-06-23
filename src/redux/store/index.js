@@ -5,11 +5,11 @@ import productReducer from "../slices/productSlice"
 import userReducer from "../slices/userSlice"
 
 const persistConfig = {
-    key: 'root',
-    storage,
-  }
-  
-const store = configureStore({ reducer: { products: persistReducer(persistConfig,productReducer), users: persistReducer(persistConfig,userReducer) } })
+  key: 'root',
+  storage,
+}
+
+const store = configureStore({ reducer: { products: persistReducer(persistConfig, productReducer), users: persistReducer(persistConfig, userReducer) } })
 
 export const persistor = persistStore(store)
 export default store

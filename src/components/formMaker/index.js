@@ -5,13 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import Loading from "../loading"
 
 const FormMaker = ({ formData, func }) => {
-  const { loading, error } = useSelector(state => state.products)
-  const { loading: userLoading, error: userError } = useSelector(state => state.users)
+  const { loading } = useSelector(state => state.products)
+  const { loading: userLoading } = useSelector(state => state.users)
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
   const dispatch = useDispatch()
   const onSubmit = (data) => {
@@ -27,13 +26,13 @@ const FormMaker = ({ formData, func }) => {
           {formData.field.map((formItem) => (
             <div className="input" key={formItem.name}>
               <label htmlFor={formItem.name}>{formItem.title}</label>
-              <input {...register(formItem.name.toString(),{required: true})} name={formItem.name} type={formItem.type} />
+              <input {...register(formItem.name.toString(), { required: true })} name={formItem.name} type={formItem.type} />
             </div>
           ))}
           <button className="button" type="submit">{formData.titleform}</button>
         </form>
       </div>
-      {(loading == "pending" || userLoading == "pending")? <Loading />:null}
+      {(loading == "pending" || userLoading == "pending") ? <Loading /> : null}
     </div>
   );
 };

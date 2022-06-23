@@ -32,7 +32,7 @@ const productSlice = createSlice({
                 const { requestId } = action?.meta
                 if (state.loading === 'idle') {
                     state.loading = 'pending'
-                    state.currentRequestId =requestId
+                    state.currentRequestId = requestId
                     state.products.push(action?.meta?.arg)
                 }
             })
