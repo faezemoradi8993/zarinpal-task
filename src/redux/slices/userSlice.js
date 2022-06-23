@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify';
 //  import the thunk
-import { addUser } from '../api'
+import { addUser } from '../../api'
 
 
 //create the slice
@@ -18,34 +18,35 @@ const userSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(addUser.fulfilled, (state, action) => {
-                const { requestId } = action.meta.requestId
-                // if (
-                //     state.loading === 'pending' &&
-                //     state.currentRequestId === requestId
-                // ) {
+                const { requestId } = action?.meta
+                if (
+                    state.loading === 'pending' &&
+                    state.currentRequestId === requestId
+                ) {
                 state.loading = 'idle'
-                toast.success("done!")
                 state.currentRequestId = undefined
-                // }
+                toast.success("done!")
+                }
             })
             .addCase(addUser.pending, (state, action) => {
+                const { requestId,arg } = action?.meta
                 if (state.loading === 'idle') {
                     state.loading = 'pending'
-                    state.currentRequestId = action?.meta?.requestId
-                    state.users = [...state.users, (action?.meta?.arg)]
+                    state.currentRequestId =requestId
+                    state.users = [...state.users, arg]
                 }
             })
             .addCase(addUser.rejected, (state, action) => {
-                // const { requestId } = action.meta
-                // if (
-                //     state.loading === 'pending' &&
-                //     state.currentRequestId === requestId
-                // ) {
+                const { requestId } = action.meta
+                if (
+                    state.loading === 'pending' &&
+                    state.currentRequestId === requestId
+                ) {
                 state.loading = 'idle'
                 state.error = action.error
                 state.currentRequestId = undefined
                 toast.error(action?.error?.message)
-                // }
+                }
             })
     }
 })

@@ -27,7 +27,7 @@ const FormMaker = ({ formData, func }) => {
           {formData.field.map((formItem) => (
             <div className="input" key={formItem.name}>
               <label htmlFor={formItem.name}>{formItem.title}</label>
-              <input {...register(formItem.name.toString())} name={formItem.name} type={formItem.type} />
+              <input {...register(formItem.name.toString(),{required: true})} name={formItem.name} type={formItem.type} />
             </div>
           ))}
           <button className="button" type="submit">{formData.titleform}</button>
