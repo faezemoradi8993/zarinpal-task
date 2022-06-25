@@ -1,20 +1,23 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux'
+import { postData } from "../../api";
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Loading from "../loading"
 
-const FormMaker = ({ formData, func }) => {
-  const { loading } = useSelector(state => state.products)
-  const { loading: userLoading } = useSelector(state => state.users)
+const FormMaker = ({ formData, endPoint }) => {
   const navigate = useNavigate();
+
+  const {loading}=useSelector(state=>state.data)
+  const dispatch = useDispatch()
+
   const {
     register,
     handleSubmit,
   } = useForm();
-  const dispatch = useDispatch()
+
   const onSubmit = (data) => {
-    dispatch(func(data))
+    dispatch(postData({endPoint,data}))
   };
 
   return (
@@ -32,7 +35,7 @@ const FormMaker = ({ formData, func }) => {
           <button className="button" type="submit">{formData.titleform}</button>
         </form>
       </div>
-      {(loading == "pending" || userLoading == "pending") ? <Loading /> : null}
+      {loading == "pending" ? <Loading /> : null}
     </div>
   );
 };

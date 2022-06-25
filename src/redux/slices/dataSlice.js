@@ -1,23 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify';
 //  import the thunk
-import { addUser } from '../../api'
+import { postData } from '../../api'
 
 
 //create the slice
 const initialState = {
-    users: [],
+    data: [],
     loading: 'idle',
     currentRequestId: undefined,
     error: null,
 }
-const userSlice = createSlice({
-    name: 'user',
+const dataSlice = createSlice({
+    name: 'data',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(addUser.fulfilled, (state, action) => {
+            .addCase(postData.fulfilled, (state, action) => {
                 const { requestId } = action?.meta
                 if (
                     state.loading === 'pending' &&
@@ -28,15 +28,15 @@ const userSlice = createSlice({
                     toast.success("done!")
                 }
             })
-            .addCase(addUser.pending, (state, action) => {
+            .addCase(postData.pending, (state, action) => {
                 const { requestId, arg } = action?.meta
                 if (state.loading === 'idle') {
                     state.loading = 'pending'
                     state.currentRequestId = requestId
-                    state.users = [...state.users, arg]
+                    state.data = [...state.data, arg.data]
                 }
             })
-            .addCase(addUser.rejected, (state, action) => {
+            .addCase(postData.rejected, (state, action) => {
                 const { requestId } = action.meta
                 if (
                     state.loading === 'pending' &&
@@ -50,4 +50,4 @@ const userSlice = createSlice({
             })
     }
 })
-export default userSlice.reducer
+export default dataSlice.reducer
